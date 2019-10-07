@@ -22,6 +22,9 @@ import styles from "./styles";
 import coffeeshops from "../CoffeeList/list";
 import CartButton from "../CartButton";
 
+//Actions
+import { addItemToCart } from "../../store/actions/coffeeActions";
+
 class CoffeeDetail extends Component {
   static navigationOptions = ({ navigation }) => {
     return {
@@ -93,7 +96,11 @@ class CoffeeDetail extends Component {
               </Picker>
             </Body>
           </ListItem>
-          <Button full danger>
+          <Button
+            full
+            warning
+            onPress={() => this.props.addItemToCart(this.state)}
+          >
             <Text>Add</Text>
           </Button>
         </List>
@@ -106,4 +113,11 @@ const mapStateToProps = state => ({
   coffeeReducer: state.coffeeReducer
 });
 
-export default connect(mapStateToProps)(CoffeeDetail);
+const mapDispatchToProps = dispatch => ({
+  addItemToCart: item => dispatch(addItemToCart(item))
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CoffeeDetail);
